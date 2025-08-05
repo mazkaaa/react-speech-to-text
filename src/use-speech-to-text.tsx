@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { SpeechRecognition } from ".";
 import type {
+	SpeechRecognition,
 	SpeechRecognitionErrorEvent,
 	SpeechRecognitionEvent,
-} from "./speech-recognition";
-import type {
 	SpeechToTextOptions,
 	SpeechToTextResult,
 	SpeechToTextState,
