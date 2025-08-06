@@ -384,7 +384,7 @@ import {
 
 ## Requirements
 
-- React 19.1.1 or higher
+- React 18.0.0 or higher
 - Modern browser with Web Speech API support
 - Internet connection (required for server-based speech recognition implementations)
 - User permission for microphone access
