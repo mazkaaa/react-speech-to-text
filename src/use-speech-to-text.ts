@@ -61,7 +61,9 @@ export const useSpeechToText = (
   /**
    * Helper function to get the SpeechRecognition constructor
    * from the global window object.
-   * returns null if not available.
+   * @returns SpeechRecognitionStatic | null
+   * Returns the SpeechRecognition constructor if available,
+   * otherwise returns null.
    */
   const getBrowserSpeechRecognition = useCallback(() => {
     if (typeof window === "undefined") return null;
@@ -77,7 +79,7 @@ export const useSpeechToText = (
 
   /**
    * Checks browser compatibility for the Web Speech API.
-   * returns an object with:
+   * @returns An object with:
    * - isSupported: boolean indicating if the browser supports speech recognition
    * - browserName: string indicating the browser name
    * - reason: string explaining why it is or isn't supported
@@ -162,10 +164,7 @@ export const useSpeechToText = (
 
     // Safari - full support (iOS 14.5+, macOS Safari 14.1+)
     if (isSafari) {
-      const isMobile =
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        );
+      const isMobile = /iPhone|iPad|iPod/i.test(navigator.userAgent);
       const isMac = /(Macintosh|Mac OS)/.test(navigator.userAgent);
 
       if (isMobile) {
@@ -220,7 +219,7 @@ export const useSpeechToText = (
 
   /**
    * Resets the silence timeout.
-   * If autoStopOnSilence is enabled, it sets a timeout to stop recognition after
+   * If autoStopOnSilence is enabled, it sets a timeout to stop recognition after the specified duration of silence (in milliseconds), as set by autoStopOnSilence.silenceDuration.
    */
   const resetSilenceTimeout = useCallback(() => {
     if (silenceTimeoutRef.current) {
