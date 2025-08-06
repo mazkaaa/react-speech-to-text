@@ -34,6 +34,7 @@ export interface SpeechToTextOptions {
   autoStopOnSilence?: {
     enabled: boolean;
     silenceDuration?: number; // in milliseconds
+    onAutoStop?: (transcript: string) => void; // callback when auto-stop occurs
   };
 }
 

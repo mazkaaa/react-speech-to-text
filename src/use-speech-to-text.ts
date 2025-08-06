@@ -206,6 +206,16 @@ export const useSpeechToText = (
         if (recognitionRef.current) {
           recognitionRef.current.stop();
         }
+
+        // Call onAutoStop callback if provided
+        if (
+          optionsRef.current.autoStopOnSilence?.onAutoStop &&
+          transcriptRef.current.final
+        ) {
+          optionsRef.current.autoStopOnSilence.onAutoStop(
+            transcriptRef.current.final
+          );
+        }
       }, optionsRef.current.autoStopOnSilence.silenceDuration);
     }
   }, []);
@@ -270,7 +280,7 @@ export const useSpeechToText = (
           isListening: true,
           error: null,
         }));
-        
+
         // Start silence timeout when listening begins
         resetSilenceTimeout();
       };
@@ -367,7 +377,7 @@ export const useSpeechToText = (
           clearTimeout(silenceTimeoutRef.current);
           silenceTimeoutRef.current = null;
         }
-        
+
         setState((prev) => ({
           ...prev,
           isListening: false,
@@ -397,7 +407,11 @@ export const useSpeechToText = (
       }));
       return null;
     }
-  }, [getBrowserSpeechRecognition, checkBrowserCompatibility, resetSilenceTimeout]);
+  }, [
+    getBrowserSpeechRecognition,
+    checkBrowserCompatibility,
+    resetSilenceTimeout,
+  ]);
 
   // Start listening
   const startListening = useCallback(
