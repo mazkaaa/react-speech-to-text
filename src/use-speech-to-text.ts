@@ -9,6 +9,17 @@ import type {
   UseSpeechToTextReturn,
 } from "./types";
 
+/**
+ * Custom hook for speech-to-text functionality using the Web Speech API.
+ * It provides methods to start, stop, and manage speech recognition,
+ * as well as handling browser compatibility and errors.
+ * This hook is designed to be used in React applications
+ * and provides a simple interface for integrating speech recognition.
+ * @param initialOptions - Optional initial configuration for speech recognition.
+ * It can include options like language, continuous mode, interim results, etc.
+ * @returns An object containing the current state of speech recognition,
+ * methods to control the recognition process, and error handling.
+ */
 export const useSpeechToText = (
   initialOptions?: Partial<SpeechToTextOptions>
 ): UseSpeechToTextReturn => {
@@ -47,7 +58,11 @@ export const useSpeechToText = (
     ...initialOptions,
   });
 
-  // Browser compatibility check
+  /**
+   * Helper function to get the SpeechRecognition constructor
+   * from the global window object.
+   * returns null if not available.
+   */
   const getBrowserSpeechRecognition = useCallback(() => {
     if (typeof window === "undefined") return null;
 
@@ -60,7 +75,13 @@ export const useSpeechToText = (
     );
   }, []);
 
-  // Enhanced browser compatibility detection
+  /**
+   * Checks browser compatibility for the Web Speech API.
+   * returns an object with:
+   * - isSupported: boolean indicating if the browser supports speech recognition
+   * - browserName: string indicating the browser name
+   * - reason: string explaining why it is or isn't supported
+   */
   const checkBrowserCompatibility = useCallback(() => {
     if (typeof window === "undefined") {
       return {
@@ -141,8 +162,11 @@ export const useSpeechToText = (
 
     // Safari - full support (iOS 14.5+, macOS Safari 14.1+)
     if (isSafari) {
-      const isMobile = /iPhone|iPad|iPod/.test(navigator.userAgent);
-      const isMac = /Mac/.test(navigator.userAgent);
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        );
+      const isMac = /(Macintosh|Mac OS)/.test(navigator.userAgent);
 
       if (isMobile) {
         // Check iOS version
@@ -194,7 +218,10 @@ export const useSpeechToText = (
     };
   }, [getBrowserSpeechRecognition]);
 
-  // Helper function to manage auto-stop on silence
+  /**
+   * Resets the silence timeout.
+   * If autoStopOnSilence is enabled, it sets a timeout to stop recognition after
+   */
   const resetSilenceTimeout = useCallback(() => {
     if (silenceTimeoutRef.current) {
       clearTimeout(silenceTimeoutRef.current);
@@ -220,7 +247,10 @@ export const useSpeechToText = (
     }
   }, []);
 
-  // Initialize speech recognition
+  /**
+   * Initializes the SpeechRecognition instance.
+   * Sets up event handlers and applies options.
+   */
   const initializeSpeechRecognition = useCallback(() => {
     // First, run comprehensive browser compatibility check
     const browserCheck = checkBrowserCompatibility();
@@ -413,7 +443,10 @@ export const useSpeechToText = (
     resetSilenceTimeout,
   ]);
 
-  // Start listening
+  /**
+   * Starts listening for speech input.
+   * If the browser is not supported, it sets an error state.
+   */
   const startListening = useCallback(
     (options?: Partial<SpeechToTextOptions>) => {
       if (!state.isSupported) {
@@ -482,7 +515,12 @@ export const useSpeechToText = (
       initializeSpeechRecognition,
       checkBrowserCompatibility,
     ]
-  ); // Stop listening
+  );
+
+  /**
+   * Stops listening for speech input.
+   * Clears the silence timeout if it exists.
+   */
   const stopListening = useCallback(() => {
     if (recognitionRef.current && state.isListening) {
       // Clear silence timeout when manually stopping
@@ -494,7 +532,10 @@ export const useSpeechToText = (
     }
   }, [state.isListening]);
 
-  // Abort listening
+  /**
+   * Aborts the current speech recognition session.
+   * Clears the silence timeout if it exists.
+   */
   const abortListening = useCallback(() => {
     if (recognitionRef.current) {
       // Clear silence timeout when aborting
@@ -506,7 +547,10 @@ export const useSpeechToText = (
     }
   }, []);
 
-  // Reset transcript
+  /**
+   * Resets the transcript and results.
+   * Clears the interim and final transcripts.
+   */
   const resetTranscript = useCallback(() => {
     // Reset transcript ref
     transcriptRef.current = { final: "", interim: "" };
@@ -520,7 +564,10 @@ export const useSpeechToText = (
     }));
   }, []);
 
-  // Clear error
+  /**
+   * Clears the current error state.
+   * Sets the error to null.
+   */
   const clearError = useCallback(() => {
     setState((prev) => ({
       ...prev,
