@@ -1,5 +1,5 @@
 {
-  "name": "react-speech-to-text",
+  "name": "@mazka/react-speech-to-text",
   "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
