@@ -31,6 +31,10 @@ export interface SpeechToTextOptions {
   interimResults?: boolean;
   maxAlternatives?: number;
   language?: string;
+  autoStopOnSilence?: {
+    enabled: boolean;
+    silenceDuration?: number; // in milliseconds
+  };
 }
 
 export interface SpeechToTextActions {
