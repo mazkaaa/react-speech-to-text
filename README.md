@@ -29,15 +29,15 @@ The Web Speech API implementation varies by browser, with important implications
 ## Installation
 
 ```bash
-npm install react-speech-to-text
+npm install @mazka/react-speech-to-text
 ```
 
 ```bash
-yarn add react-speech-to-text
+yarn add @mazka/react-speech-to-text
 ```
 
 ```bash
-pnpm add react-speech-to-text
+pnpm add @mazka/react-speech-to-text
 ```
 
 ## Quick Start
@@ -395,7 +395,7 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/mazkaaa/react-speech-to-text/blob/main/LICENSE) file for details.
 
 ## Acknowledgments
 
