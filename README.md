@@ -2,7 +2,7 @@
 
 A powerful, TypeScript-first React hook for speech recognition using the Web Speech API. This library provides a simple yet comprehensive interface for converting speech to text in React applications.
 
-[![npm version](https://badge.fury.io/js/react-speech-to-text.svg)](https://badge.fury.io/js/react-speech-to-text) [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![npm version](https://badge.fury.io/js/@mazka%2Freact-speech-to-text.svg)](https://badge.fury.io/js/@mazka%2Freact-speech-to-text.svg) [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ## Features
 
