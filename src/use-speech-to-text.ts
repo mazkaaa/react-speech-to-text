@@ -32,6 +32,9 @@ export const useSpeechToText = (
     results: [],
     error: null,
     isInitializing: true,
+    isAutoStopping: false,
+    isPaused: false,
+    lastSpeechTimestamp: null,
   });
 
   // Default options
@@ -308,6 +311,7 @@ export const useSpeechToText = (
           ...prev,
           isListening: true,
           error: null,
+          lastSpeechTimestamp: new Date(),
         }));
 
         // Start silence timeout when listening begins
@@ -474,6 +478,14 @@ export const useSpeechToText = (
         optionsRef.current = { ...optionsRef.current, ...options };
       }
 
+      // Set isAutoStopping to true if autoStopOnSilence.enabled is true
+      const autoStopEnabled =
+        optionsRef.current.autoStopOnSilence?.enabled === true;
+      setState((prev) => ({
+        ...prev,
+        isAutoStopping: autoStopEnabled,
+      }));
+
       // Initialize or reinitialize if needed
       if (!recognitionRef.current) {
         recognitionRef.current = initializeSpeechRecognition();
@@ -547,6 +559,42 @@ export const useSpeechToText = (
   }, []);
 
   /**
+   * Pauses the current speech recognition session.
+   * This method pausing the recognition and listening process,
+   * but does not clear current transcripts or results.
+   * It can be used to temporarily stop listening without losing the current state.
+   * This method does not clear the silence timeout, allowing for resuming later without losing the context.
+   *
+   */
+  const pauseListening = useCallback(() => {
+    if (recognitionRef.current && state.isListening) {
+      recognitionRef.current.abort(); // Abort to pause
+      setState((prev) => ({
+        ...prev,
+        isPaused: true,
+        isListening: false,
+      }));
+    }
+  }, [state.isListening]);
+
+  /**
+   * Resumes the paused speech recognition session.
+   * This method resume the recognition process, allowing the user to continue speaking.
+   */
+  const resumeListening = useCallback(() => {
+    if (recognitionRef.current && state.isPaused) {
+      recognitionRef.current.start(); // Restart to resume
+      setState((prev) => ({
+        ...prev,
+        isPaused: false,
+        isListening: true,
+      }));
+      resetSilenceTimeout(); // Reset silence timeout on resume
+      lastSpeechTimeRef.current = new Date(); // Reset last speech time
+    }
+  }, [state.isPaused, resetSilenceTimeout]);
+
+  /**
    * Resets the transcript and results.
    * Clears the interim and final transcripts.
    */
@@ -613,6 +661,8 @@ export const useSpeechToText = (
     startListening,
     stopListening,
     abortListening,
+    pauseListening,
+    resumeListening,
     resetTranscript,
     clearError,
   };
