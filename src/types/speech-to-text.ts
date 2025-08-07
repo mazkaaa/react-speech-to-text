@@ -24,6 +24,9 @@ export interface SpeechToTextState {
   results: SpeechToTextResult[];
   error: SpeechToTextStateError | null;
   isInitializing: boolean;
+  isPaused: boolean;
+  isAutoStopping: boolean;
+  lastSpeechTimestamp: Date | null;
 }
 
 export interface SpeechToTextOptions {
@@ -39,8 +42,10 @@ export interface SpeechToTextOptions {
 }
 
 export interface SpeechToTextActions {
-  startListening: () => void;
+  startListening: (options?: Partial<SpeechToTextOptions>) => void;
   stopListening: () => void;
+  pauseListening: () => void;
+  resumeListening: () => void;
   abortListening: () => void;
   resetTranscript: () => void;
   clearError: () => void;

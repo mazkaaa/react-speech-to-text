@@ -7,6 +7,11 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mazkaaa/react-speech-to-text.git"
+  },
+  "homepage": "https://github.com/mazkaaa/react-speech-to-text#readme",
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
@@ -19,7 +24,11 @@
     "speech-recognition",
     "web-speech-api",
     "hooks",
-    "typescript"
+    "typescript",
+    "react-hooks",
+    "react-speech-to-text",
+    "react-speech-recognition",
+    "react-web-speech-api"
   ],
   "author": "Azka Muhammad <hello.mazka@gmail.com>",
   "license": "MIT",
