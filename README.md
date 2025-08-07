@@ -309,7 +309,7 @@ function AutoStopExample() {
 
 ## Browser Compatibility
 
-The Web Speech API has **limited browser support** because it relies on Google's cloud-based speech recognition service. Here's the current support status:
+The Web Speech API has **limited browser support** because it relies on their web speech API integration (chrome/chromium integrates with Google Cloud Service). Here's the current support status:
 
 | Browser | Support | Notes |
 |---------|---------|-------|
